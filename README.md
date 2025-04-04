@@ -1,2 +1,120 @@
-# semmailer
-Python script to manage seminar mailing list
+# Semmailer
+
+A command-line tool to manage the KU Math Seminar mailing list.
+
+## Developer
+Dr. Denys Dutykh
+Mathematics Department, Khalifa University
+
+## Overview
+
+Semmailer helps you organize and manage email distribution lists, with specific support for:
+- Storing emails in optimized batches (maximum 58 addresses per batch)
+- Adding new contacts
+- Creating new mailing list databases
+- Printing the full list or individual batches
+
+## Repository Structure
+
+- `semlist.py` - Main Python script for managing mailing lists
+- `MailingList.json` - Default database file containing email addresses (JSON format)
+- `dbase/` - Directory for storing additional mailing list databases
+
+## Installation
+
+No special installation is required. Simply download the script and ensure you have Python 3.x installed.
+
+```bash
+git clone https://github.com/dutykh/semmailer.git
+cd semmailer
+```
+
+## Usage
+
+### Activate a database
+
+```bash
+python3 semlist.py activate KUMathSeminar
+```
+
+Sets the specified database as the active one. All commands will use this database by default.
+
+### Print all emails in the mailing list
+
+```bash
+python3 semlist.py print all
+```
+
+### Add a new email address
+
+```bash
+python3 semlist.py add email@example.com
+python3 semlist.py add "Name" <email@example.com>
+python3 semlist.py add "Name" <email@example.com>;
+```
+
+You can add multiple emails at once:
+
+```bash
+python3 semlist.py add "Name1" <email1@example.com>; "Name2" <email2@example.com>
+```
+
+### Create a new database
+
+```bash
+python3 semlist.py new KUMathSeminar
+```
+
+This creates a new empty database file in the `dbase/` folder.
+
+### Optimize batches
+
+```bash
+python3 semlist.py optimize
+```
+
+This reorganizes the entries to minimize the number of batches while respecting the maximum of 58 emails per batch.
+
+### Convert text mailing list to JSON
+
+```bash
+python3 semlist.py convert [file.txt]
+```
+
+Converts a text-based mailing list to the JSON format used by this tool.
+
+## Database Format
+
+The mailing list is stored in JSON format with the following structure:
+
+```json
+{
+  "name": "KU Math Seminar",
+  "created": "2024-04-04",
+  "last_modified": "2024-04-04",
+  "batches": [
+    {
+      "id": 1,
+      "emails": [
+        {
+          "email": "example@ku.ac.ae",
+          "name": "Example Name",
+          "full_entry": "Example Name <example@ku.ac.ae>;"
+        }
+      ]
+    }
+  ]
+}
+```
+
+- Each batch contains up to 58 email entries
+- Each entry stores the email, name, and original text format
+
+## Requirements
+
+- Python 3.x
+- No external dependencies required
+
+## License
+
+[MIT License](LICENSE)
