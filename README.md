@@ -1,4 +1,4 @@
-# Semmailer
+# Seminar mailer utility
 
 A command-line tool to manage the KU Math Seminar mailing list.
 
