@@ -37,18 +37,25 @@ cd semmailer
 
 ## Usage Examples
 
-### Activate a database
+### Get help
 
 ```bash
-python3 semlist.py activate KUMathSeminar
+python3 semlist.py help                  # Display usage information
+python3 semlist.py -h                    # Same as help
+python3 semlist.py --help                # Same as help
 ```
 
-Sets the specified database as the active one. All commands will use this database by default.
-
-### Print all emails in the mailing list
+### Print emails
 
 ```bash
-python3 semlist.py print all
+python3 semlist.py print all             # Print all emails in simple format for copying
+python3 semlist.py print 1               # Print emails from batch 1
+```
+
+### Display batch information
+
+```bash
+python3 semlist.py batches               # Show the number of batches
 ```
 
 ### Add a new email address
@@ -87,14 +94,6 @@ python3 semlist.py optimize
 ```
 
 This reorganizes the entries to minimize the number of batches while respecting the maximum of 58 emails per batch.
-
-### Convert text mailing list to JSON
-
-```bash
-python3 semlist.py convert [file.txt]
-```
-
-Converts a text-based mailing list to the JSON format used by this tool.
 
 ## Database Format
 

@@ -3,14 +3,15 @@
 semlist.py - Command-line tool to manage the KU Math Seminar mailing list.
 
 Usage:
-  python3 semlist.py print all
-  python3 semlist.py add email@example.com
-  python3 semlist.py add "Name" <email@example.com>
-  python3 semlist.py add "Name1" <email1@example.com>; "Name2" <email2@example.com>
-  python3 semlist.py new DatabaseName
-  python3 semlist.py activate DatabaseName
-  python3 semlist.py optimize
-  python3 semlist.py convert [file.txt]
+  python3 semlist.py help                  - Show help information
+  python3 semlist.py print all             - Print all emails for copying
+  python3 semlist.py print [BATCH_NUMBER]  - Print specific batch
+  python3 semlist.py batches               - Show batch info
+  python3 semlist.py add 'email@example.com'
+  python3 semlist.py new DatabaseName      - Create database
+  python3 semlist.py del DatabaseName      - Delete database
+  python3 semlist.py activate DatabaseName - Set active database
+  python3 semlist.py config                - Show configuration
 """
 
 import os
@@ -72,14 +73,16 @@ def get_active_database_path():
 
 def parse_arguments():
     """Parse command-line arguments."""
-    parser = argparse.ArgumentParser(description="Manage the KU Math Seminar mailing list.")
+    # Manually check for help commands to provide consistent help output
+    if len(sys.argv) > 1 and sys.argv[1] in ['-h', '--help', 'help']:
+        display_help()
+        sys.exit(0)
+
+    parser = argparse.ArgumentParser(add_help=False)  # Disable built-in help
     parser.add_argument("command", help="Command to execute: print, add, new, etc.")
     parser.add_argument("args", nargs="*", help="Arguments for the command")
 
-    args = parser.parse_args()
-
-    # Special handling for 'add' command - no need to join arguments as we'll use the raw args
-    return args
+    return parser.parse_args()
 
 def parse_email_entries(args_list):
     """Parse multiple email entries from arguments."""
@@ -355,8 +358,14 @@ def optimize_batches(data, max_per_batch=MAX_EMAILS_PER_BATCH):
     data["batches"] = optimized_batches
     return data
 
-def print_emails(data):
-    """Print emails in batches."""
+def print_emails(data, batch_number=None, simple_format=False):
+    """Print emails in batches.
+
+    Args:
+        data: The database data
+        batch_number: If provided, print only this batch number
+        simple_format: If True, print only the email addresses in a simple format for copying
+    """
     if not data:
         print("No data found in the database.")
         return
@@ -365,13 +374,54 @@ def print_emails(data):
         print("No batches found in the database.")
         return
 
+    # If a specific batch is requested
+    if batch_number is not None:
+        if batch_number == 'all':
+            # Print all batches in simple format
+            for i, batch in enumerate(data["batches"], 1):
+                print(f"\n=== Batch {i} ===")
+                for entry in batch["emails"]:
+                    print(entry["email"])
+            return
+
+        try:
+            batch_num = int(batch_number)
+            # Check if the batch exists
+            if batch_num < 1 or batch_num > len(data["batches"]):
+                print(f"Error: Batch {batch_num} does not exist.")
+                print(f"Available batches: 1 to {len(data['batches'])}")
+                return
+
+            # Print the requested batch
+            batch = data["batches"][batch_num - 1]
+            print(f"\n=== Batch {batch_num} ===")
+            if simple_format:
+                for entry in batch["emails"]:
+                    print(entry["email"])
+            else:
+                for entry in batch["emails"]:
+                    print(f"  {entry.get('full_entry', f'{entry.get('name', '')} <{entry['email']}>').strip()}")
+
+                    # Optionally show name components
+                    first = entry.get('first_name', '')
+                    middle = entry.get('middle_names', '')
+                    last = entry.get('last_name', '')
+                    if first or middle or last:
+                        print(f"    First: {first}, Middle: {middle}, Last: {last}")
+            return
+
+        except ValueError:
+            print(f"Error: Invalid batch number '{batch_number}'.")
+            return
+
+    # Print summary and all batches in detailed format
     total_entries = sum(len(batch["emails"]) for batch in data["batches"])
     print(f"Database: {data.get('name', 'Unknown')}")
     print(f"Last modified: {data.get('last_modified', 'Unknown')}")
     print(f"Found {total_entries} entries in {len(data['batches'])} batches:")
 
-    for batch in data["batches"]:
-        print(f"\nBatch {batch['id']} ({len(batch['emails'])} entries):")
+    for i, batch in enumerate(data["batches"], 1):
+        print(f"\n=== Batch {i} ===")
         for entry in batch["emails"]:
             # Display name and email
             print(f"  {entry.get('full_entry', f'{entry.get('name', '')} <{entry['email']}>').strip()}")
@@ -496,6 +546,52 @@ def create_new_database(name):
         print(f"Error creating new database: {str(e)}")
         return False
 
+def delete_database(name):
+    """Delete a database from the dbase folder."""
+    # Ensure the database exists
+    db_name = name if name.endswith('.json') else f"{name}.json"
+    db_path = os.path.join(DATABASE_FOLDER, db_name)
+
+    if not os.path.exists(db_path):
+        print(f"Error: Database '{name}' does not exist.")
+        return False
+
+    # Ask for confirmation
+    confirm = input(f"Are you sure you want to delete the database '{name}'? (yes/no): ")
+    if confirm.lower() not in ['yes', 'y']:
+        print("Database deletion cancelled.")
+        return False
+
+    try:
+        # Check if it's the active database
+        config = ensure_config_exists()
+        active_db = config.get("active_database", "")
+
+        # Delete the database file
+        os.remove(db_path)
+        print(f"Database '{name}' has been deleted.")
+
+        # If it was the active database, reset the active database
+        if db_name == active_db or os.path.join(DATABASE_FOLDER, active_db) == db_path:
+            print(f"Warning: The deleted database was the active database.")
+
+            # Find another database to set as active, if any
+            existing_dbs = [f for f in os.listdir(DATABASE_FOLDER) if f.endswith('.json') and f != 'config.json']
+            if existing_dbs:
+                new_active = existing_dbs[0]
+                config["active_database"] = new_active
+                save_config(config)
+                print(f"'{new_active}' is now set as the active database.")
+            else:
+                config["active_database"] = ""
+                save_config(config)
+                print("No active database is set. Create a new database with 'python3 semlist.py new DatabaseName'.")
+
+        return True
+    except Exception as e:
+        print(f"Error deleting database: {str(e)}")
+        return False
+
 def activate_database(name):
     """Activate a database."""
     # Ensure the database exists
@@ -526,7 +622,14 @@ def activate_database(name):
         return False
 
 def optimize_command(database_path=None):
-    """Optimize the database to minimize the number of batches."""
+    """Optimize the database to minimize the number of batches.
+
+    This command reorganizes all emails to use the minimum number of batches
+    possible while respecting the maximum of 58 emails per batch.
+
+    When adding emails one at a time, you might end up with partially filled
+    batches. This command consolidates all emails to maximize batch usage.
+    """
     if database_path is None:
         database_path = get_active_database_path()
 
@@ -543,24 +646,55 @@ def optimize_command(database_path=None):
     else:
         return False
 
-def convert_command(txt_path="MailingList.txt"):
-    """Convert a text mailing list to JSON format."""
-    if not os.path.exists(txt_path):
-        print(f"Error: Text file '{txt_path}' does not exist.")
-        return False
-
-    json_path = os.path.join(DATABASE_FOLDER, os.path.basename(txt_path).replace('.txt', '.json'))
-    return convert_txt_to_json(txt_path, json_path)
+def display_help():
+    """Display help information."""
+    print("KU Math Seminar Mailing List Manager")
+    print("\nUsage: python3 semlist.py [command] [arguments]")
+    print("\nCommands:")
+    print("  help, -h, --help                     Show this help information")
+    print("  print all                            Print all emails in simple format for copying")
+    print("  print [BATCH_NUMBER]                 Print emails from the specified batch")
+    print("  batches                              Print the number of batches")
+    print("  add 'email@example.com'              Add a single email address")
+    print("  add 'Name <email@example.com>'       Add an email with a name")
+    print("  add 'Name1 <email1@...>; Name2 <email2@...>'  Add multiple emails")
+    print("  new DatabaseName                     Create a new database")
+    print("  del DatabaseName                     Delete an existing database")
+    print("  activate DatabaseName                Activate an existing database")
+    print("  optimize                             Optimize batches (minimize number of batches)")
+    print("  config                               Show current configuration")
+    print("\nExample of batch optimization:")
+    print("  If you have 3 batches with 30 emails each, running 'optimize'")
+    print("  will consolidate them into 2 batches (58 emails in first batch,")
+    print("  32 emails in second batch).")
 
 def main():
     """Main entry point of the script."""
     args = parse_arguments()
     command = args.command.lower()
 
-    if command == "print" and len(args.args) > 0 and args.args[0].lower() == "all":
+    if command == "print":
+        if not args.args:
+            print("Error: The 'print' command requires either 'all' or a batch number.")
+            print("Use 'python3 semlist.py print all' to print all emails.")
+            print("Use 'python3 semlist.py print [BATCH_NUMBER]' to print a specific batch.")
+            return
+
         data = read_mailing_list()
         if data:
-            print_emails(data)
+            print_emails(data, args.args[0], simple_format=True)
+
+    elif command == "batches":
+        data = read_mailing_list()
+        if data and data.get("batches"):
+            print(f"Number of batches: {len(data['batches'])}")
+            for i, batch in enumerate(data["batches"], 1):
+                print(f"  Batch {i}: {len(batch['emails'])} emails")
+        else:
+            print("No batches found in the database.")
+
+    elif command == "help":
+        display_help()
 
     elif command == "add" and len(args.args) > 0:
         # Check if the default database exists, if not, inform user to create one
@@ -584,16 +718,16 @@ def main():
         name = args.args[0]
         create_new_database(name)
 
+    elif command == "del" and len(args.args) > 0:
+        name = args.args[0]
+        delete_database(name)
+
     elif command == "activate" and len(args.args) > 0:
         name = args.args[0]
         activate_database(name)
 
     elif command == "optimize":
         optimize_command()
-
-    elif command == "convert" and len(args.args) <= 1:
-        txt_path = args.args[0] if args.args else "MailingList.txt"
-        convert_command(txt_path)
 
     elif command == "config":
         # Display current configuration
@@ -620,16 +754,7 @@ def main():
 
     else:
         print("Invalid command or missing arguments.")
-        print("Usage examples:")
-        print("  python3 semlist.py print all")
-        print("  python3 semlist.py add 'email@example.com'")
-        print("  python3 semlist.py add 'Name <email@example.com>'")
-        print("  python3 semlist.py add 'Name1 <email1@example.com>; Name2 <email2@example.com>'")
-        print("  python3 semlist.py new DatabaseName")
-        print("  python3 semlist.py activate DatabaseName")
-        print("  python3 semlist.py optimize")
-        print("  python3 semlist.py convert [file.txt]")
-        print("  python3 semlist.py config")
+        print("Use 'python3 semlist.py help' for usage information.")
 
 if __name__ == "__main__":
     main()
