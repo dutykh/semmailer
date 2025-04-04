@@ -1,10 +1,4 @@
-### Show current configuration
-
-```bash
-python3 semlist.py config
-```
-
-Displays the current active database and checks if it exists.# Semmailer
+# Semmailer
 
 A command-line tool to manage the KU Math Seminar mailing list.
 
@@ -16,14 +10,14 @@ Mathematics Department, Khalifa University
 
 Semmailer helps you organize and manage email distribution lists, with specific support for:
 - Storing emails in optimized batches (maximum 58 addresses per batch)
-- Adding new contacts
-- Creating new mailing list databases
-- Printing the full list or individual batches
+- Adding and removing contacts
+- Creating and managing mailing list databases
+- Printing the full list or individual batches in Outlook-compatible format
 
 ## Repository Structure
 
 - `semlist.py` - Main Python script for managing mailing lists
-- `MailingList.json` - Default database file containing email addresses (JSON format)
+- `MailingList.json` - Default database file containing email addresses
 - `dbase/` - Directory for storing additional mailing list databases
 
 ## Installation
@@ -48,9 +42,11 @@ python3 semlist.py --help                # Same as help
 ### Print emails
 
 ```bash
-python3 semlist.py print all             # Print all emails in simple format for copying
+python3 semlist.py print all             # Print all emails in Outlook format
 python3 semlist.py print 1               # Print emails from batch 1
 ```
+
+The emails are formatted as `Name <email>;` which works with Microsoft Outlook.
 
 ### Display batch information
 
@@ -58,34 +54,23 @@ python3 semlist.py print 1               # Print emails from batch 1
 python3 semlist.py batches               # Show the number of batches
 ```
 
-### Add a new email address
+### Managing emails
 
 ```bash
-python3 semlist.py add 'email@example.com'
-python3 semlist.py add 'Name <email@example.com>'
-python3 semlist.py add 'Name <email@example.com>;'
+python3 semlist.py add 'email@example.com'                     # Add a single email
+python3 semlist.py add 'Name <email@example.com>'              # Add with name
+python3 semlist.py add 'Name1 <email1@...>; Name2 <email2@...>' # Add multiple emails
+python3 semlist.py rem email@example.com                       # Remove an email
 ```
 
-You can add multiple emails at once:
+### Database management
 
 ```bash
-python3 semlist.py add 'Name1 <email1@example.com>; Name2 <email2@example.com>'
+python3 semlist.py new DatabaseName      # Create a new database
+python3 semlist.py del DatabaseName      # Delete a database (with confirmation)
+python3 semlist.py activate DatabaseName # Set the active database
+python3 semlist.py config                # Show current configuration
 ```
-
-First, middle, and last name handling:
-
-```bash
-python3 semlist.py add 'First Last <email@example.com>'
-python3 semlist.py add 'First Middle Last <email@example.com>'
-```
-
-### Create a new database
-
-```bash
-python3 semlist.py new KUMathSeminar
-```
-
-This creates a new empty database file in the `dbase/` folder.
 
 ### Optimize batches
 
@@ -93,7 +78,7 @@ This creates a new empty database file in the `dbase/` folder.
 python3 semlist.py optimize
 ```
 
-This reorganizes the entries to minimize the number of batches while respecting the maximum of 58 emails per batch.
+This reorganizes the entries to minimize the number of batches while respecting the maximum of 58 emails per batch. For example, if you have 3 batches with 30 emails each, running optimize will consolidate them into 2 batches (58 emails in first batch, 32 emails in second batch).
 
 ## Database Format
 

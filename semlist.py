@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 semlist.py - Command-line tool to manage the KU Math Seminar mailing list.
 
@@ -381,7 +380,13 @@ def print_emails(data, batch_number=None, simple_format=False):
             for i, batch in enumerate(data["batches"], 1):
                 print(f"\n=== Batch {i} ===")
                 for entry in batch["emails"]:
-                    print(entry["email"])
+                    # Format for Outlook: First name Last name <email>;
+                    first = entry.get('first_name', '')
+                    last = entry.get('last_name', '')
+                    name = f"{first} {last}".strip()
+                    if not name:
+                        name = entry.get('name', '')
+                    print(f"{name} <{entry['email']}>;")
             return
 
         try:
@@ -397,7 +402,13 @@ def print_emails(data, batch_number=None, simple_format=False):
             print(f"\n=== Batch {batch_num} ===")
             if simple_format:
                 for entry in batch["emails"]:
-                    print(entry["email"])
+                    # Format for Outlook: First name Last name <email>;
+                    first = entry.get('first_name', '')
+                    last = entry.get('last_name', '')
+                    name = f"{first} {last}".strip()
+                    if not name:
+                        name = entry.get('name', '')
+                    print(f"{name} <{entry['email']}>;")
             else:
                 for entry in batch["emails"]:
                     print(f"  {entry.get('full_entry', f'{entry.get('name', '')} <{entry['email']}>').strip()}")
@@ -506,6 +517,49 @@ def add_emails(entries_str, database_path=None):
             return True
 
     return False
+
+def remove_email(email, database_path=None):
+    """Remove an email from the database."""
+    if database_path is None:
+        database_path = get_active_database_path()
+
+    data = read_mailing_list(database_path)
+    if not data:
+        return False
+
+    email_found = False
+    email = email.lower()  # Convert to lowercase for case-insensitive comparison
+
+    # Search through all batches for the email
+    for batch in data["batches"]:
+        for i, entry in enumerate(batch["emails"]):
+            if entry["email"].lower() == email:
+                removed_entry = batch["emails"].pop(i)
+                email_found = True
+                name = removed_entry.get("name", "")
+                if name:
+                    print(f"Email '{name} <{email}>' has been removed from the database.")
+                else:
+                    print(f"Email '{email}' has been removed from the database.")
+                break
+        if email_found:
+            break
+
+    if not email_found:
+        print(f"Email '{email}' was not found in the database.")
+        return False
+
+    # Remove any empty batches
+    data["batches"] = [batch for batch in data["batches"] if batch["emails"]]
+
+    # Renumber batch IDs to ensure they are consecutive
+    for i, batch in enumerate(data["batches"], 1):
+        batch["id"] = i
+
+    if write_mailing_list(data, database_path):
+        return True
+    else:
+        return False
 
 def create_new_database(name):
     """Create a new database in the dbase folder."""
@@ -652,12 +706,13 @@ def display_help():
     print("\nUsage: python3 semlist.py [command] [arguments]")
     print("\nCommands:")
     print("  help, -h, --help                     Show this help information")
-    print("  print all                            Print all emails in simple format for copying")
+    print("  print all                            Print all emails in Outlook format for copying")
     print("  print [BATCH_NUMBER]                 Print emails from the specified batch")
     print("  batches                              Print the number of batches")
     print("  add 'email@example.com'              Add a single email address")
     print("  add 'Name <email@example.com>'       Add an email with a name")
     print("  add 'Name1 <email1@...>; Name2 <email2@...>'  Add multiple emails")
+    print("  rem email@example.com                Remove an email address from the database")
     print("  new DatabaseName                     Create a new database")
     print("  del DatabaseName                     Delete an existing database")
     print("  activate DatabaseName                Activate an existing database")
@@ -667,6 +722,9 @@ def display_help():
     print("  If you have 3 batches with 30 emails each, running 'optimize'")
     print("  will consolidate them into 2 batches (58 emails in first batch,")
     print("  32 emails in second batch).")
+    print("\nEmail format for Outlook:")
+    print("  Emails are printed in the format: 'Name <email>;' which is compatible")
+    print("  with Microsoft Outlook's expected format for recipients.")
 
 def main():
     """Main entry point of the script."""
@@ -713,6 +771,10 @@ def main():
                 print("Use 'python3 semlist.py new DatabaseName' to create a new database.")
             return
         add_emails(args.args)
+
+    elif command == "rem" and len(args.args) > 0:
+        email = args.args[0]
+        remove_email(email)
 
     elif command == "new" and len(args.args) > 0:
         name = args.args[0]
