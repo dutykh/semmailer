@@ -1,4 +1,10 @@
-# Semmailer
+### Show current configuration
+
+```bash
+python3 semlist.py config
+```
+
+Displays the current active database and checks if it exists.# Semmailer
 
 A command-line tool to manage the KU Math Seminar mailing list.
 
@@ -29,7 +35,7 @@ git clone https://github.com/dutykh/semmailer.git
 cd semmailer
 ```
 
-## Usage
+## Usage Examples
 
 ### Activate a database
 
@@ -48,15 +54,22 @@ python3 semlist.py print all
 ### Add a new email address
 
 ```bash
-python3 semlist.py add email@example.com
-python3 semlist.py add "Name" <email@example.com>
-python3 semlist.py add "Name" <email@example.com>;
+python3 semlist.py add 'email@example.com'
+python3 semlist.py add 'Name <email@example.com>'
+python3 semlist.py add 'Name <email@example.com>;'
 ```
 
 You can add multiple emails at once:
 
 ```bash
-python3 semlist.py add "Name1" <email1@example.com>; "Name2" <email2@example.com>
+python3 semlist.py add 'Name1 <email1@example.com>; Name2 <email2@example.com>'
+```
+
+First, middle, and last name handling:
+
+```bash
+python3 semlist.py add 'First Last <email@example.com>'
+python3 semlist.py add 'First Middle Last <email@example.com>'
 ```
 
 ### Create a new database
@@ -99,7 +112,10 @@ The mailing list is stored in JSON format with the following structure:
         {
           "email": "example@ku.ac.ae",
           "name": "Example Name",
-          "full_entry": "Example Name <example@ku.ac.ae>;"
+          "full_entry": "Example Name <example@ku.ac.ae>;",
+          "first_name": "Example",
+          "middle_names": "",
+          "last_name": "Name"
         }
       ]
     }

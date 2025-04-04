@@ -65,7 +65,7 @@ def get_active_database_path():
     config = ensure_config_exists()
     active_db = config.get("active_database", f"{DEFAULT_DATABASE_NAME}.json")
 
-    # Check if the path includes the database folder prefix
+    # Make sure we have the correct path with database folder
     if not active_db.startswith(DATABASE_FOLDER):
         return os.path.join(DATABASE_FOLDER, active_db)
     return active_db
@@ -76,24 +76,33 @@ def parse_arguments():
     parser.add_argument("command", help="Command to execute: print, add, new, etc.")
     parser.add_argument("args", nargs="*", help="Arguments for the command")
 
-    return parser.parse_args()
+    args = parser.parse_args()
 
-def parse_email_entries(args_str):
-    """Parse multiple email entries from a string."""
-    # Combine all arguments into a single string if they're not already
-    if isinstance(args_str, list):
-        args_str = " ".join(args_str)
+    # Special handling for 'add' command - no need to join arguments as we'll use the raw args
+    return args
 
-    # Split the string by semicolons, but handle cases where semicolons are within quotes
+def parse_email_entries(args_list):
+    """Parse multiple email entries from arguments."""
+    # The input should be a list of arguments which may be a single quoted string with multiple emails
+    if not args_list:
+        return []
+
+    # First, join all arguments into a single string
+    input_str = " ".join(args_list)
+
+    # Split by semicolons if there are multiple entries
     entries = []
     current_entry = ""
-    in_quotes = False
+    in_angle_brackets = False
 
-    for char in args_str:
-        if char == '"':
-            in_quotes = not in_quotes
+    for char in input_str:
+        if char == '<':
+            in_angle_brackets = True
             current_entry += char
-        elif char == ';' and not in_quotes:
+        elif char == '>':
+            in_angle_brackets = False
+            current_entry += char
+        elif char == ';' and not in_angle_brackets:
             if current_entry.strip():
                 entries.append(current_entry.strip())
             current_entry = ""
@@ -104,33 +113,85 @@ def parse_email_entries(args_str):
     if current_entry.strip():
         entries.append(current_entry.strip())
 
-    # Process each entry to extract email and name
+    # Process each entry to extract email and name components
     parsed_entries = []
     for entry in entries:
-        # Try different parsing patterns
-        # Pattern 1: "Name" <email@example.com>
-        match = re.search(r'"([^"]*)"?\s*<([^>]+)>', entry)
+        # Strip any single quotes from the entry
+        entry = entry.strip("'")
+
+        # Pattern: Name With Spaces <email@example.com>
+        match = re.search(r'(.*?)\s*<([^>]+)>', entry)
         if match:
-            name = match.group(1).strip()
+            full_name = match.group(1).strip()
             email = match.group(2).strip()
-            parsed_entries.append({"name": name, "email": email})
+            name_components = parse_name(full_name)
+            parsed_entries.append({
+                "email": email,
+                "name": full_name,
+                **name_components
+            })
             continue
 
-        # Pattern 2: <email@example.com>
+        # Pattern: <email@example.com>
         match = re.search(r'<([^>]+)>', entry)
         if match:
             email = match.group(1).strip()
-            parsed_entries.append({"name": "", "email": email})
+            parsed_entries.append({
+                "email": email,
+                "name": "",
+                "first_name": "",
+                "middle_names": "",
+                "last_name": ""
+            })
             continue
 
-        # Pattern 3: Just email@example.com
+        # Pattern: Just email@example.com
         match = re.search(r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', entry)
         if match:
             email = match.group(1).strip()
-            parsed_entries.append({"name": "", "email": email})
+            parsed_entries.append({
+                "email": email,
+                "name": "",
+                "first_name": "",
+                "middle_names": "",
+                "last_name": ""
+            })
             continue
 
     return parsed_entries
+
+def parse_name(full_name):
+    """Parse a full name into first, middle, and last name components."""
+    # Remove any quotes
+    name = full_name.replace('"', '').strip()
+    if not name:
+        return {
+            "first_name": "",
+            "middle_names": "",
+            "last_name": ""
+        }
+
+    # Split the name into components
+    name_parts = name.split()
+
+    if len(name_parts) == 1:
+        return {
+            "first_name": name_parts[0],
+            "middle_names": "",
+            "last_name": ""
+        }
+    elif len(name_parts) == 2:
+        return {
+            "first_name": name_parts[0],
+            "middle_names": "",
+            "last_name": name_parts[1]
+        }
+    else:
+        return {
+            "first_name": name_parts[0],
+            "middle_names": " ".join(name_parts[1:-1]),
+            "last_name": name_parts[-1]
+        }
 
 def convert_txt_to_json(txt_path, json_path=None):
     """Convert a text-based mailing list to JSON format."""
@@ -159,10 +220,12 @@ def convert_txt_to_json(txt_path, json_path=None):
                     email = extract_email_from_line(line)
                     name = extract_name_from_line(line)
                     if email:
+                        name_components = parse_name(name)
                         current_batch.append({
                             "email": email,
                             "name": name,
-                            "full_entry": line
+                            "full_entry": line,
+                            **name_components
                         })
 
             # Add the last batch if it's not empty
@@ -310,7 +373,15 @@ def print_emails(data):
     for batch in data["batches"]:
         print(f"\nBatch {batch['id']} ({len(batch['emails'])} entries):")
         for entry in batch["emails"]:
+            # Display name and email
             print(f"  {entry.get('full_entry', f'{entry.get('name', '')} <{entry['email']}>').strip()}")
+
+            # Optionally show name components
+            first = entry.get('first_name', '')
+            middle = entry.get('middle_names', '')
+            last = entry.get('last_name', '')
+            if first or middle or last:
+                print(f"    First: {first}, Middle: {middle}, Last: {last}")
 
 def is_email_exists(email, data):
     """Check if the email already exists in the database."""
@@ -342,7 +413,10 @@ def add_email_entry(entry, data):
     new_entry = {
         "email": email,
         "name": name,
-        "full_entry": full_entry
+        "full_entry": full_entry,
+        "first_name": entry.get("first_name", ""),
+        "middle_names": entry.get("middle_names", ""),
+        "last_name": entry.get("last_name", "")
     }
 
     # Add to the last batch if it exists and has room, otherwise create a new batch
@@ -410,7 +484,13 @@ def create_new_database(name):
         with open(new_db_path, 'w') as f:
             json.dump(data, f, indent=2)
 
+        # Update config to set this as active database - store just the filename
+        config = ensure_config_exists()
+        config["active_database"] = db_name
+        save_config(config)
+
         print(f"Successfully created new database '{name}' in {DATABASE_FOLDER}/ folder.")
+        print(f"'{name}' is now the active database.")
         return True
     except Exception as e:
         print(f"Error creating new database: {str(e)}")
@@ -424,11 +504,20 @@ def activate_database(name):
 
     if not os.path.exists(db_path):
         print(f"Error: Database '{name}' does not exist.")
+        print(f"Looking for file at: {db_path}")
+
+        # Check if any databases exist and list them
+        existing_dbs = [f for f in os.listdir(DATABASE_FOLDER) if f.endswith('.json') and f != 'config.json']
+        if existing_dbs:
+            print("\nAvailable databases:")
+            for db in existing_dbs:
+                print(f"  {db}")
+            print("\nUse 'python3 semlist.py activate <database_name>' to activate one of these.")
         return False
 
-    # Update the configuration
+    # Update the configuration - store just the filename, not the full path
     config = ensure_config_exists()
-    config["active_database"] = db_path
+    config["active_database"] = db_name
 
     if save_config(config):
         print(f"Successfully activated database '{name}'.")
@@ -470,9 +559,25 @@ def main():
 
     if command == "print" and len(args.args) > 0 and args.args[0].lower() == "all":
         data = read_mailing_list()
-        print_emails(data)
+        if data:
+            print_emails(data)
 
     elif command == "add" and len(args.args) > 0:
+        # Check if the default database exists, if not, inform user to create one
+        active_db = get_active_database_path()
+        if not os.path.exists(active_db):
+            print(f"Error: Active database file '{active_db}' does not exist.")
+
+            # Check if there are any databases available
+            existing_dbs = [f for f in os.listdir(DATABASE_FOLDER) if f.endswith('.json') and f != 'config.json']
+            if existing_dbs:
+                print("\nAvailable databases:")
+                for db in existing_dbs:
+                    print(f"  {db}")
+                print("\nUse 'python3 semlist.py activate <database_name>' to activate one of these.")
+            else:
+                print("Use 'python3 semlist.py new DatabaseName' to create a new database.")
+            return
         add_emails(args.args)
 
     elif command == "new" and len(args.args) > 0:
@@ -490,17 +595,41 @@ def main():
         txt_path = args.args[0] if args.args else "MailingList.txt"
         convert_command(txt_path)
 
+    elif command == "config":
+        # Display current configuration
+        config = ensure_config_exists()
+        active_db_config = config.get('active_database', 'None')
+        print("Current configuration:")
+        print(f"Active database (in config): {active_db_config}")
+
+        active_db_path = get_active_database_path()
+        print(f"Full path being used: {active_db_path}")
+
+        if os.path.exists(active_db_path):
+            print("Database exists: Yes")
+        else:
+            print("Database exists: No - File not found")
+
+            # List available databases
+            existing_dbs = [f for f in os.listdir(DATABASE_FOLDER) if f.endswith('.json') and f != 'config.json']
+            if existing_dbs:
+                print("\nAvailable databases:")
+                for db in existing_dbs:
+                    print(f"  {db}")
+                print("\nUse 'python3 semlist.py activate <database_name>' to activate one of these.")
+
     else:
         print("Invalid command or missing arguments.")
         print("Usage examples:")
         print("  python3 semlist.py print all")
-        print("  python3 semlist.py add email@example.com")
-        print("  python3 semlist.py add \"Name\" <email@example.com>")
-        print("  python3 semlist.py add \"Name1\" <email1@example.com>; \"Name2\" <email2@example.com>")
+        print("  python3 semlist.py add 'email@example.com'")
+        print("  python3 semlist.py add 'Name <email@example.com>'")
+        print("  python3 semlist.py add 'Name1 <email1@example.com>; Name2 <email2@example.com>'")
         print("  python3 semlist.py new DatabaseName")
         print("  python3 semlist.py activate DatabaseName")
         print("  python3 semlist.py optimize")
         print("  python3 semlist.py convert [file.txt]")
+        print("  python3 semlist.py config")
 
 if __name__ == "__main__":
     main()
