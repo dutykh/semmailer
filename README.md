@@ -1,4 +1,4 @@
-# Seminar mailer utility
+# Semmailer
 
 A command-line tool to manage the KU Math Seminar mailing list.
 
@@ -37,6 +37,17 @@ cd semmailer
 python3 semlist.py help                  # Display usage information
 python3 semlist.py -h                    # Same as help
 python3 semlist.py --help                # Same as help
+python3 semlist.py print all             # Print all emails in Outlook format
+python3 semlist.py print 1               # Print emails from batch 1
+python3 semlist.py batches               # Show the number of batches
+python3 semlist.py stat                  # Show statistics about the database
+python3 semlist.py add 'email@example.com'   # Add a single email
+python3 semlist.py rem email@example.com     # Remove an email
+python3 semlist.py new DatabaseName      # Create a new database
+python3 semlist.py del DatabaseName      # Delete a database
+python3 semlist.py activate DatabaseName # Set active database
+python3 semlist.py optimize              # Minimize number of batches
+python3 semlist.py config                # Show configuration
 ```
 
 ### Print emails
@@ -48,10 +59,11 @@ python3 semlist.py print 1               # Print emails from batch 1
 
 The emails are formatted as `Name <email>;` which works with Microsoft Outlook.
 
-### Display batch information
+### Display database information
 
 ```bash
-python3 semlist.py batches               # Show the number of batches
+python3 semlist.py batches               # Show the number of batches and emails in each
+python3 semlist.py stat                  # Show detailed statistics about the database
 ```
 
 ### Managing emails

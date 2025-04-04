@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 semlist.py - Command-line tool to manage the KU Math Seminar mailing list.
 
@@ -259,6 +260,82 @@ def convert_txt_to_json(txt_path, json_path=None):
         print(f"Error converting text to JSON: {str(e)}")
         return False
 
+def show_statistics(database_path=None):
+    """Show statistics about the mailing list database."""
+    if database_path is None:
+        database_path = get_active_database_path()
+
+    data = read_mailing_list(database_path)
+    if not data:
+        return False
+
+    # Calculate statistics
+    total_emails = 0
+    batch_stats = []
+
+    for batch in data["batches"]:
+        batch_count = len(batch["emails"])
+        total_emails += batch_count
+        batch_stats.append({
+            "id": batch["id"],
+            "count": batch_count
+        })
+
+    # Display statistics
+    print(f"Database: {data.get('name', 'Unknown')}")
+    print(f"Last modified: {data.get('last_modified', 'Unknown')}")
+    print(f"Total number of emails: {total_emails}")
+    print(f"Number of batches: {len(data['batches'])}")
+    print("\nEmails per batch:")
+
+    for batch in batch_stats:
+        print(f"  Batch {batch['id']}: {batch['count']} emails")
+
+    return True
+
+def remove_email(email, database_path=None):
+    """Remove an email from the database."""
+    if database_path is None:
+        database_path = get_active_database_path()
+
+    data = read_mailing_list(database_path)
+    if not data:
+        return False
+
+    email_found = False
+    email = email.lower()  # Convert to lowercase for case-insensitive comparison
+
+    # Search through all batches for the email
+    for batch in data["batches"]:
+        for i, entry in enumerate(batch["emails"]):
+            if entry["email"].lower() == email:
+                removed_entry = batch["emails"].pop(i)
+                email_found = True
+                name = removed_entry.get("name", "")
+                if name:
+                    print(f"Email '{name} <{email}>' has been removed from the database.")
+                else:
+                    print(f"Email '{email}' has been removed from the database.")
+                break
+        if email_found:
+            break
+
+    if not email_found:
+        print(f"Email '{email}' was not found in the database.")
+        return False
+
+    # Remove any empty batches
+    data["batches"] = [batch for batch in data["batches"] if batch["emails"]]
+
+    # Renumber batch IDs to ensure they are consecutive
+    for i, batch in enumerate(data["batches"], 1):
+        batch["id"] = i
+
+    if write_mailing_list(data, database_path):
+        return True
+    else:
+        return False
+
 def extract_email_from_line(line):
     """Extract the email address from a line."""
     match = re.search(r'<([^>]+)>', line)
@@ -378,7 +455,7 @@ def print_emails(data, batch_number=None, simple_format=False):
         if batch_number == 'all':
             # Print all batches in simple format
             for i, batch in enumerate(data["batches"], 1):
-                print(f"\n=== Batch {i} ===")
+                print(f"\n=== Batch {i} ===\n")
                 for entry in batch["emails"]:
                     # Format for Outlook: First name Last name <email>;
                     first = entry.get('first_name', '')
@@ -399,7 +476,7 @@ def print_emails(data, batch_number=None, simple_format=False):
 
             # Print the requested batch
             batch = data["batches"][batch_num - 1]
-            print(f"\n=== Batch {batch_num} ===")
+            print(f"\n=== Batch {batch_num} ===\n")
             if simple_format:
                 for entry in batch["emails"]:
                     # Format for Outlook: First name Last name <email>;
@@ -432,7 +509,7 @@ def print_emails(data, batch_number=None, simple_format=False):
     print(f"Found {total_entries} entries in {len(data['batches'])} batches:")
 
     for i, batch in enumerate(data["batches"], 1):
-        print(f"\n=== Batch {i} ===")
+        print(f"\n=== Batch {i} ===\n")
         for entry in batch["emails"]:
             # Display name and email
             print(f"  {entry.get('full_entry', f'{entry.get('name', '')} <{entry['email']}>').strip()}")
@@ -517,49 +594,6 @@ def add_emails(entries_str, database_path=None):
             return True
 
     return False
-
-def remove_email(email, database_path=None):
-    """Remove an email from the database."""
-    if database_path is None:
-        database_path = get_active_database_path()
-
-    data = read_mailing_list(database_path)
-    if not data:
-        return False
-
-    email_found = False
-    email = email.lower()  # Convert to lowercase for case-insensitive comparison
-
-    # Search through all batches for the email
-    for batch in data["batches"]:
-        for i, entry in enumerate(batch["emails"]):
-            if entry["email"].lower() == email:
-                removed_entry = batch["emails"].pop(i)
-                email_found = True
-                name = removed_entry.get("name", "")
-                if name:
-                    print(f"Email '{name} <{email}>' has been removed from the database.")
-                else:
-                    print(f"Email '{email}' has been removed from the database.")
-                break
-        if email_found:
-            break
-
-    if not email_found:
-        print(f"Email '{email}' was not found in the database.")
-        return False
-
-    # Remove any empty batches
-    data["batches"] = [batch for batch in data["batches"] if batch["emails"]]
-
-    # Renumber batch IDs to ensure they are consecutive
-    for i, batch in enumerate(data["batches"], 1):
-        batch["id"] = i
-
-    if write_mailing_list(data, database_path):
-        return True
-    else:
-        return False
 
 def create_new_database(name):
     """Create a new database in the dbase folder."""
@@ -709,6 +743,7 @@ def display_help():
     print("  print all                            Print all emails in Outlook format for copying")
     print("  print [BATCH_NUMBER]                 Print emails from the specified batch")
     print("  batches                              Print the number of batches")
+    print("  stat                                 Show statistics about the database")
     print("  add 'email@example.com'              Add a single email address")
     print("  add 'Name <email@example.com>'       Add an email with a name")
     print("  add 'Name1 <email1@...>; Name2 <email2@...>'  Add multiple emails")
@@ -753,6 +788,9 @@ def main():
 
     elif command == "help":
         display_help()
+
+    elif command == "stat":
+        show_statistics()
 
     elif command == "add" and len(args.args) > 0:
         # Check if the default database exists, if not, inform user to create one
