@@ -2,6 +2,12 @@
 """
 semlist.py - Command-line tool to manage the KU Math Seminar mailing list.
 
+Author: Dr. Denys Dutykh
+        Mathematics Department, Khalifa University
+        Abu Dhabi, UAE
+
+© 2025 Denys Dutykh. All rights reserved.
+
 Usage:
   python3 semlist.py help                  - Show help information
   python3 semlist.py print all             - Print all emails for copying

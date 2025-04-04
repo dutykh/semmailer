@@ -1,18 +1,19 @@
-# Semmailer
+# Seminar mailer database utility
 
 A command-line tool to manage the KU Math Seminar mailing list.
 
 ## Developer
-Dr. Denys Dutykh
-Mathematics Department, Khalifa University
+Dr. Denys Dutykh (Mathematics Department, Khalifa University)
 
 ## Overview
 
-Semmailer helps you organize and manage email distribution lists, with specific support for:
+Semmailer is a specialized command-line utility developed to efficiently manage email distribution lists for the KU Math Seminar. The tool offers advanced management features including:
+
 - Storing emails in optimized batches (maximum 58 addresses per batch)
-- Adding and removing contacts
-- Creating and managing mailing list databases
+- Adding and removing contacts with proper name handling
+- Creating and managing multiple mailing list databases
 - Printing the full list or individual batches in Outlook-compatible format
+- Statistics and optimization features
 
 ## Repository Structure
 
