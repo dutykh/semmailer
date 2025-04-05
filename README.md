@@ -3,7 +3,8 @@
 A command-line tool to manage the KU Math Seminar mailing list.
 
 ## Developer
-Dr. Denys Dutykh (Mathematics Department, Khalifa University)
+Dr. Denys Dutykh
+Mathematics Department, Khalifa University
 
 ## Overview
 
@@ -13,6 +14,7 @@ Semmailer is a specialized command-line utility developed to efficiently manage 
 - Adding and removing contacts with proper name handling
 - Creating and managing multiple mailing list databases
 - Printing the full list or individual batches in Outlook-compatible format
+- Silent mode for saving output directly to files
 - Statistics and optimization features
 
 ## Repository Structure
@@ -38,27 +40,18 @@ cd semmailer
 python3 semlist.py help                  # Display usage information
 python3 semlist.py -h                    # Same as help
 python3 semlist.py --help                # Same as help
-python3 semlist.py print all             # Print all emails in Outlook format
-python3 semlist.py print 1               # Print emails from batch 1
-python3 semlist.py batches               # Show the number of batches
-python3 semlist.py stat                  # Show statistics about the database
-python3 semlist.py add 'email@example.com'   # Add a single email
-python3 semlist.py rem email@example.com     # Remove an email
-python3 semlist.py new DatabaseName      # Create a new database
-python3 semlist.py del DatabaseName      # Delete a database
-python3 semlist.py activate DatabaseName # Set active database
-python3 semlist.py optimize              # Minimize number of batches
-python3 semlist.py config                # Show configuration
 ```
 
 ### Print emails
 
 ```bash
-python3 semlist.py print all             # Print all emails in Outlook format
-python3 semlist.py print 1               # Print emails from batch 1
+python3 semlist.py print all             # Print all emails in Outlook format to screen
+python3 semlist.py print 1               # Print emails from batch 1 to screen
+python3 semlist.py print all output.txt  # Save all emails to output.txt file (silent mode)
+python3 semlist.py print 1 output.txt    # Save emails from batch 1 to output.txt file (silent mode)
 ```
 
-The emails are formatted as `Name <email>;` which works with Microsoft Outlook.
+The emails are formatted as `Name <email>;` which works with Microsoft Outlook. When saving to a file, the script operates in silent mode, only showing a success message without displaying the email content on the screen.
 
 ### Display database information
 
@@ -76,6 +69,8 @@ python3 semlist.py add 'Name1 <email1@...>; Name2 <email2@...>' # Add multiple e
 python3 semlist.py rem email@example.com                       # Remove an email
 ```
 
+When adding emails with names, the script parses and stores first, middle, and last name components automatically.
+
 ### Database management
 
 ```bash
@@ -84,6 +79,8 @@ python3 semlist.py del DatabaseName      # Delete a database (with confirmation)
 python3 semlist.py activate DatabaseName # Set the active database
 python3 semlist.py config                # Show current configuration
 ```
+
+The system supports multiple databases stored in the `dbase/` directory. You can create, delete, and switch between them with these commands.
 
 ### Optimize batches
 
@@ -122,6 +119,28 @@ The mailing list is stored in JSON format with the following structure:
 
 - Each batch contains up to 58 email entries
 - Each entry stores the email, name, and original text format
+- Name components (first, middle, last) are stored separately for better formatting
+
+## Email Format Handling
+
+The tool has sophisticated handling of various email formats:
+
+- Simple email: `email@example.com`
+- Email with name: `Name <email@example.com>`
+- Full format: `"First Last" <email@example.com>;`
+- Multiple entries: `"Name1" <email1@example.com>; "Name2" <email2@example.com>;`
+
+When printing, emails are formatted according to Microsoft Outlook requirements (Name <email>;).
+
+## Silent Mode
+
+When saving output to a file, the script operates in silent mode:
+
+```bash
+python3 semlist.py print 1 output.txt
+```
+
+This will save the emails to the file without displaying them on the terminal, showing only a confirmation message. This feature is useful for scripts and automated workflows.
 
 ## Requirements
 
@@ -130,4 +149,4 @@ The mailing list is stored in JSON format with the following structure:
 
 ## License
 
-[MIT License](LICENSE)
+[GPL-3.0 License](LICENSE)

@@ -7,17 +7,27 @@ Author: Dr. Denys Dutykh
         Abu Dhabi, UAE
 
 © 2025 Denys Dutykh. All rights reserved.
+Licensed under GPL-3.0 license.
 
 Usage:
-  python3 semlist.py help                  - Show help information
-  python3 semlist.py print all             - Print all emails for copying
-  python3 semlist.py print [BATCH_NUMBER]  - Print specific batch
-  python3 semlist.py batches               - Show batch info
-  python3 semlist.py add 'email@example.com'
-  python3 semlist.py new DatabaseName      - Create database
-  python3 semlist.py del DatabaseName      - Delete database
-  python3 semlist.py activate DatabaseName - Set active database
-  python3 semlist.py config                - Show configuration
+  python3 semlist.py help                            - Show this help information
+  python3 semlist.py -h                              - Same as help
+  python3 semlist.py --help                          - Same as help
+  python3 semlist.py print all                       - Print all emails in Outlook format to screen
+  python3 semlist.py print [BATCH_NUMBER]            - Print emails from specified batch to screen
+  python3 semlist.py print all [FILENAME]            - Save all emails to a file (silent mode)
+  python3 semlist.py print [BATCH_NUMBER] [FILENAME] - Save emails from specified batch to a file (silent mode)
+  python3 semlist.py batches                         - Print the number of batches and emails in each
+  python3 semlist.py stat                            - Show detailed statistics about the database
+  python3 semlist.py add 'email@example.com'         - Add a single email address
+  python3 semlist.py add 'Name <email@example.com>'  - Add an email with a name
+  python3 semlist.py add 'Name1 <email1@...>; Name2 <email2@...>' - Add multiple emails
+  python3 semlist.py rem email@example.com           - Remove an email address from the database
+  python3 semlist.py new DatabaseName                - Create a new database
+  python3 semlist.py del DatabaseName                - Delete an existing database (with confirmation)
+  python3 semlist.py activate DatabaseName           - Activate an existing database
+  python3 semlist.py optimize                        - Optimize batches (minimize number of batches)
+  python3 semlist.py config                          - Show current configuration
 """
 
 import os
@@ -440,14 +450,89 @@ def optimize_batches(data, max_per_batch=MAX_EMAILS_PER_BATCH):
     data["batches"] = optimized_batches
     return data
 
-def print_emails(data, batch_number=None, simple_format=False):
+def print_emails(data, batch_number=None, simple_format=False, output_file=None):
     """Print emails in batches.
 
     Args:
         data: The database data
         batch_number: If provided, print only this batch number
         simple_format: If True, print only the email addresses in a simple format for copying
+        output_file: If provided, write output to this file instead of the console
     """
+    # If we're writing to a file, we don't want any console output
+    if output_file:
+        try:
+            with open(output_file, 'w') as f:
+                # Process the requested batch
+                if batch_number == 'all':
+                    # Write all batches to file
+                    for i, batch in enumerate(data["batches"], 1):
+                        f.write(f"\n=== Batch {i} ===\n\n")
+                        for entry in batch["emails"]:
+                            # Format for Outlook: First name Last name <email>;
+                            first = entry.get('first_name', '')
+                            last = entry.get('last_name', '')
+                            name = f"{first} {last}".strip()
+                            if not name:
+                                name = entry.get('name', '')
+                            f.write(f"{name} <{entry['email']}>;")
+                            f.write("\n")
+
+                elif batch_number is not None:
+                    try:
+                        batch_num = int(batch_number)
+                        # Check if the batch exists
+                        if batch_num < 1 or batch_num > len(data["batches"]):
+                            print(f"Error: Batch {batch_num} does not exist.")
+                            print(f"Available batches: 1 to {len(data['batches'])}")
+                            return
+
+                        # Write the requested batch to file
+                        batch = data["batches"][batch_num - 1]
+                        f.write(f"\n=== Batch {batch_num} ===\n\n")
+                        for entry in batch["emails"]:
+                            # Format for Outlook: First name Last name <email>;
+                            first = entry.get('first_name', '')
+                            last = entry.get('last_name', '')
+                            name = f"{first} {last}".strip()
+                            if not name:
+                                name = entry.get('name', '')
+                            f.write(f"{name} <{entry['email']}>;")
+                            f.write("\n")
+
+                    except ValueError:
+                        print(f"Error: Invalid batch number '{batch_number}'.")
+                        return
+
+                else:
+                    # Write summary and all batches in detailed format
+                    total_entries = sum(len(batch["emails"]) for batch in data["batches"])
+                    f.write(f"Database: {data.get('name', 'Unknown')}\n")
+                    f.write(f"Last modified: {data.get('last_modified', 'Unknown')}\n")
+                    f.write(f"Found {total_entries} entries in {len(data['batches'])} batches:\n")
+
+                    for i, batch in enumerate(data["batches"], 1):
+                        f.write(f"\n=== Batch {i} ===\n\n")
+                        for entry in batch["emails"]:
+                            # Display name and email
+                            f.write(f"  {entry.get('full_entry', f'{entry.get('name', '')} <{entry['email']}>').strip()}\n")
+
+                            # Optionally show name components
+                            first = entry.get('first_name', '')
+                            middle = entry.get('middle_names', '')
+                            last = entry.get('last_name', '')
+                            if first or middle or last:
+                                f.write(f"    First: {first}, Middle: {middle}, Last: {last}\n")
+
+            # Only print success message after closing the file
+            print(f"Successfully wrote to '{output_file}'.")
+            return
+
+        except Exception as e:
+            print(f"Error opening file '{output_file}' for writing: {str(e)}")
+            return
+
+    # Console output (only when no output_file is specified)
     if not data:
         print("No data found in the database.")
         return
@@ -748,6 +833,8 @@ def display_help():
     print("  help, -h, --help                     Show this help information")
     print("  print all                            Print all emails in Outlook format for copying")
     print("  print [BATCH_NUMBER]                 Print emails from the specified batch")
+    print("  print all [FILENAME]                 Save all emails to a file")
+    print("  print [BATCH_NUMBER] [FILENAME]      Save emails from the specified batch to a file")
     print("  batches                              Print the number of batches")
     print("  stat                                 Show statistics about the database")
     print("  add 'email@example.com'              Add a single email address")
@@ -779,9 +866,15 @@ def main():
             print("Use 'python3 semlist.py print [BATCH_NUMBER]' to print a specific batch.")
             return
 
+        # Check if we have an output file specified
+        batch_number = args.args[0]
+        output_file = None
+        if len(args.args) > 1:
+            output_file = args.args[1]
+
         data = read_mailing_list()
         if data:
-            print_emails(data, args.args[0], simple_format=True)
+            print_emails(data, batch_number, simple_format=True, output_file=output_file)
 
     elif command == "batches":
         data = read_mailing_list()
@@ -794,9 +887,6 @@ def main():
 
     elif command == "help":
         display_help()
-
-    elif command == "stat":
-        show_statistics()
 
     elif command == "add" and len(args.args) > 0:
         # Check if the default database exists, if not, inform user to create one
@@ -834,6 +924,9 @@ def main():
 
     elif command == "optimize":
         optimize_command()
+
+    elif command == "stat":
+        show_statistics()
 
     elif command == "config":
         # Display current configuration
