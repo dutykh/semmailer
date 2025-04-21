@@ -647,7 +647,10 @@ def print_emails(data, batch_number=None, simple_format=False, output_file=None)
                 if batch_number == 'all':
                     # Write all batches to file
                     for i, batch in enumerate(data["batches"], 1):
-                        f.write(f"\n=== Batch {i} ===\n\n")
+                        if i == 1:
+                            f.write(f"=== Batch {i} ===\n\n")
+                        else:
+                            f.write(f"\n=== Batch {i} ===\n\n")
                         for j, entry in enumerate(batch["emails"]):
                             # Format for Outlook: First name Last name <email>;
                             first = entry.get('first_name', '')
@@ -674,7 +677,7 @@ def print_emails(data, batch_number=None, simple_format=False, output_file=None)
 
                         # Write the requested batch to file
                         batch = data["batches"][batch_num - 1]
-                        f.write(f"\n=== Batch {batch_num} ===\n\n")
+                        f.write(f"=== Batch {batch_num} ===\n\n")
                         for j, entry in enumerate(batch["emails"]):
                             # Format for Outlook: First name Last name <email>;
                             first = entry.get('first_name', '')
@@ -702,7 +705,10 @@ def print_emails(data, batch_number=None, simple_format=False, output_file=None)
                     f.write(f"Found {total_entries} entries in {len(data['batches'])} batches:\n")
 
                     for i, batch in enumerate(data["batches"], 1):
-                        f.write(f"\n=== Batch {i} ===\n\n")
+                        if i == 1:
+                            f.write(f"\n=== Batch {i} ===\n\n")
+                        else:
+                            f.write(f"\n=== Batch {i} ===\n\n")
                         for j, entry in enumerate(batch["emails"]):
                             # Don't add semicolon to the last email in the batch
                             full_entry = entry.get('full_entry', f'{entry.get("name", "")} <{entry["email"]}>')
@@ -809,7 +815,10 @@ def print_emails(data, batch_number=None, simple_format=False, output_file=None)
     print(f"Found {total_entries} entries in {len(data['batches'])} batches:")
 
     for i, batch in enumerate(data["batches"], 1):
-        print(f"\n=== Batch {i} ===\n")
+        if i == 1:
+            print(f"\n=== Batch {i} ===\n")
+        else:
+            print(f"\n=== Batch {i} ===\n")
         for j, entry in enumerate(batch["emails"]):
             # Don't add semicolon to the last email in the batch
             full_entry = entry.get('full_entry', f'{entry.get("name", "")} <{entry["email"]}>')
