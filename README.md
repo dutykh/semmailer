@@ -53,6 +53,14 @@ python3 semlist.py print 1 output.txt    # Save emails from batch 1 to output.tx
 
 The emails are formatted as `Name <email>;` which works with Microsoft Outlook. When saving to a file, the script operates in silent mode, only showing a success message without displaying the email content on the screen.
 
+### Check for emails
+
+```bash
+python3 semlist.py check 'pattern'         # Search for emails matching the regex pattern (case-insensitive)
+```
+
+This command allows you to search the active database for email addresses or names matching a given regular expression. It prints any matches found.
+
 ### Display database information
 
 ```bash
