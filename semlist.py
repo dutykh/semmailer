@@ -33,7 +33,7 @@ Dependencies:
 Configuration:
     - All mailing list databases are stored in the 'dbase/' directory (JSON files)
     - The active database is tracked in 'dbase/config.json'
-    - Maximum emails per batch: 58 (for Microsoft Outlook compatibility)
+    - Maximum emails per batch: 57 (for Microsoft Outlook compatibility)
 
 References:
     - Microsoft Outlook email import format
@@ -84,7 +84,7 @@ from datetime import datetime
 DEFAULT_DATABASE_NAME = "MailingList"
 DATABASE_FOLDER = "dbase"
 CONFIG_FILE = os.path.join(DATABASE_FOLDER, "config.json")
-MAX_EMAILS_PER_BATCH = 58
+MAX_EMAILS_PER_BATCH = 57
 
 def ensure_config_exists():
     """Ensure the configuration file exists."""
@@ -596,7 +596,7 @@ def write_mailing_list(data, database_path=None):
         print(f"Error writing to database: {str(e)}")
         return False
 
-def optimize_batches(data, max_per_batch=MAX_EMAILS_PER_BATCH):
+def optimize_batches(data, max_per_batch=57):
     """
     Optimize the batches to minimize the number of batches while
     respecting the max_per_batch limit.
@@ -1020,7 +1020,7 @@ def optimize_command(database_path=None):
     """Optimize the database to minimize the number of batches.
 
     This command reorganizes all emails to use the minimum number of batches
-    possible while respecting the maximum of 58 emails per batch.
+    possible while respecting the maximum of 57 emails per batch.
 
     When adding emails one at a time, you might end up with partially filled
     batches. This command consolidates all emails to maximize batch usage.

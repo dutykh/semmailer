@@ -10,7 +10,7 @@ Mathematics Department, Khalifa University
 
 Semmailer is a specialized command-line utility developed to efficiently manage email distribution lists for the KU Math Seminar. The tool offers advanced management features including:
 
-- Storing emails in optimized batches (maximum 58 addresses per batch)
+- Storing emails in optimized batches (maximum 57 addresses per batch)
 - Adding and removing contacts with proper name handling
 - Creating and managing multiple mailing list databases
 - Printing the full list or individual batches in Outlook-compatible format
@@ -125,7 +125,7 @@ The mailing list is stored in JSON format with the following structure:
 }
 ```
 
-- Each batch contains up to 58 email entries
+- Each batch contains up to 57 email entries
 - Each entry stores the email, name, and original text format
 - Name components (first, middle, last) are stored separately for better formatting
 
