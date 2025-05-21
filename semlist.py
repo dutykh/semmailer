@@ -77,7 +77,6 @@ import sys
 import argparse
 import re
 import json
-from pathlib import Path
 from datetime import datetime
 
 # Constants
@@ -908,117 +907,10 @@ def add_emails(entries_str, database_path=None):
 
     return False
 
-def create_new_database(name):
-    """Create a new database in the dbase folder."""
-    # Create the dbase folder if it doesn't exist
-    dbase_path = Path(DATABASE_FOLDER)
-    dbase_path.mkdir(exist_ok=True)
-
-    # Create a new empty database file
-    db_name = name if name.endswith('.json') else f"{name}.json"
-    new_db_path = dbase_path / db_name
-
-    if new_db_path.exists():
-        print(f"Error: Database '{name}' already exists.")
-        return False
-
-    try:
-        # Create initial JSON structure
-        data = {
-            "name": name,
-            "created": datetime.now().strftime("%Y-%m-%d"),
-            "last_modified": datetime.now().strftime("%Y-%m-%d"),
-            "batches": []
-        }
-
-        # Write JSON data
-        with open(new_db_path, 'w') as f:
-            json.dump(data, f, indent=2)
-        print(f"Database '{name}' created successfully in {DATABASE_FOLDER}/ folder.")
-        print(f"'{name}' is now the active database.")
-        return True
-    except Exception as e:
-        print(f"Error creating new database: {str(e)}")
-        return False
-
-def delete_database(name):
-    """Delete a database from the dbase folder."""
-    # Ensure the database exists
-    db_name = name if name.endswith('.json') else f"{name}.json"
-    db_path = os.path.join(DATABASE_FOLDER, db_name)
-
-    if not os.path.exists(db_path):
-        print(f"Error: Database '{name}' does not exist.")
-        return False
-
-    # Ask for confirmation
-    confirm = input(f"Are you sure you want to delete the database '{name}'? (yes/no): ")
-    if confirm.lower() not in ['yes', 'y']:
-        print("Database deletion cancelled.")
-        return False
-
-    try:
-        # Check if it's the active database
-        config = ensure_config_exists()
-        active_db = config.get("active_database", "")
-
-        # Delete the database file
-        os.remove(db_path)
-        print(f"Database '{name}' has been deleted.")
-
-        # If it was the active database, reset the active database
-        if db_name == active_db or os.path.join(DATABASE_FOLDER, active_db) == db_path:
-            print(f"Warning: The deleted database was the active database.")
-
-            # Find another database to set as active, if any
-            existing_dbs = [f for f in os.listdir(DATABASE_FOLDER) if f.endswith('.json') and f != 'config.json']
-            if existing_dbs:
-                new_active = existing_dbs[0]
-                config["active_database"] = new_active
-                save_config(config)
-                print(f"'{new_active}' is now set as the active database.")
-            else:
-                config["active_database"] = ""
-                save_config(config)
-                print("No active database is set. Create a new database with 'python3 semlist.py new DatabaseName'.")
-
-        return True
-    except Exception as e:
-        print(f"Error deleting database: {str(e)}")
-        return False
-
-def activate_database(name):
-    """Activate a database."""
-    # Ensure the database exists
-    db_name = name if name.endswith('.json') else f"{name}.json"
-    db_path = os.path.join(DATABASE_FOLDER, db_name)
-
-    if not os.path.exists(db_path):
-        print(f"Error: Database '{name}' does not exist.")
-        print(f"Looking for file at: {db_path}")
-
-        # Check if any databases exist and list them
-        existing_dbs = [f for f in os.listdir(DATABASE_FOLDER) if f.endswith('.json') and f != 'config.json']
-        if existing_dbs:
-            print("\nAvailable databases:")
-            for db in existing_dbs:
-                print(f"  {db}")
-            print("\nUse 'python3 semlist.py activate <database_name>' to activate one of these.")
-        return False
-
-    # Update the configuration - store just the filename
-    config = ensure_config_exists()
-    config["active_database"] = db_name
-
-    if save_config(config):
-        print(f"Successfully activated database '{name}'.")
-        return True
-    else:
-        return False
 
 def optimize_command(database_path=None):
-    """Optimize the database to minimize the number of batches.
-
+    """Reorganize emails to use the minimum number of batches.
+    
     This command reorganizes all emails to use the minimum number of batches
     possible while respecting the maximum of 57 emails per batch.
 
@@ -1212,7 +1104,7 @@ def delete_database(db_name):
         # Check if the deleted database filename matches the active one in config.
         if config.get("active_database") == db_filename:
             default_db_filename = f"{DEFAULT_DATABASE_NAME}.json"
-            print(f"Warning: The deleted database was the active one.")
+            print("Warning: The deleted database was the active one.")
             print(f"Resetting active database to default: '{default_db_filename}'.")
             config["active_database"] = default_db_filename
             # Ensure the default database file actually exists; create if not.
@@ -1335,7 +1227,7 @@ def add_emails_to_database(emails_to_add):
              print(f"Error: Active database '{active_db_filename}' not found or is invalid.")
              print(f"Cannot add emails. Please check the file in '{DATABASE_FOLDER}' or activate/create a valid database:")
              print(f"  - Create: python3 semlist.py new {active_db_filename[:-5]}  (if it should be new)")
-             print(f"  - Activate: python3 semlist.py activate <ExistingDBName>")
+             print("  - Activate: python3 semlist.py activate <ExistingDBName>")
              return False
 
     # --- Prepare for Duplicate Checking ---
