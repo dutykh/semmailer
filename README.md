@@ -3,8 +3,11 @@
 A command-line tool to manage the KU Math Seminar mailing list.
 
 ## Developer
-Dr. Denys Dutykh
-Mathematics Department, Khalifa University
+
+**Dr. Denys Dutykh**  
+Mathematics Department  
+Khalifa University of Science and Technology  
+Abu Dhabi, UAE
 
 ## Overview
 
