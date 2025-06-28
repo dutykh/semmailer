@@ -1,7 +1,7 @@
 {
   "name": "KUMathSeminarMailingList",
   "created": "2025-04-04",
-  "last_modified": "2025-04-21",
+  "last_modified": "2025-05-04",
   "batches": [
     {
       "id": 1,
@@ -461,7 +461,12 @@
           "first_name": "Lama",
           "middle_names": "",
           "last_name": "Tarsissi"
-        },
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "emails": [
         {
           "email": "100063708@ku.ac.ae",
           "name": "Shahana Kappil",
@@ -469,12 +474,7 @@
           "first_name": "Shahana",
           "middle_names": "",
           "last_name": "Kappil"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "emails": [
+        },
         {
           "email": "100063760@ku.ac.ae",
           "name": "Muhammad Ismail Yunus",
@@ -922,7 +922,12 @@
           "first_name": "Grace",
           "middle_names": "",
           "last_name": "Younes"
-        },
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "emails": [
         {
           "email": "tanujit.chakraborty@sorbonne.ae",
           "name": "Tanujit Chakraborty",
@@ -938,12 +943,7 @@
           "first_name": "Eliane",
           "middle_names": "",
           "last_name": "Bsaibess"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "emails": [
+        },
         {
           "email": "s.christopoulos@sorbonne.ae",
           "name": "Stavros Christopoulos",
@@ -1383,7 +1383,12 @@
           "first_name": "FAWAZ",
           "middle_names": "",
           "last_name": "HJOUJ"
-        },
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "emails": [
         {
           "email": "idika.okorie@ku.ac.ae",
           "name": "\"Idika Eke Okorie\"",
@@ -1407,12 +1412,7 @@
           "first_name": "Jad",
           "middle_names": "",
           "last_name": "Bassous"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "emails": [
+        },
         {
           "email": "hani.elassadi@ku.ac.ae",
           "name": "\"Hani El-Assadi\"",
@@ -1532,6 +1532,22 @@
           "first_name": "Arnab",
           "middle_names": "",
           "last_name": "Barua"
+        },
+        {
+          "email": "altahan.madeleine@gmail.com",
+          "name": "Altahan Madeleine",
+          "full_entry": "\"Altahan Madeleine\" <altahan.madeleine@gmail.com>;",
+          "first_name": "Altahan",
+          "middle_names": "",
+          "last_name": "Madeleine"
+        },
+        {
+          "email": "sergey.petrov@ku.ac.ae",
+          "name": "Sergey Petrov",
+          "full_entry": "\"Sergey Petrov\" <sergey.petrov@ku.ac.ae>;",
+          "first_name": "Sergey",
+          "middle_names": "",
+          "last_name": "Petrov"
         }
       ]
     }
