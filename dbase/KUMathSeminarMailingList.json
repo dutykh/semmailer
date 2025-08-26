@@ -1598,14 +1598,6 @@
           "last_name": "Khumaeroh"
         },
         {
-          "email": "rahaggi99@gmail.com",
-          "name": "",
-          "full_entry": "<rahaggi99@gmail.com>;",
-          "first_name": "",
-          "middle_names": "",
-          "last_name": ""
-        },
-        {
           "email": "gulnaz.shaidolda@ku.ac.ae",
           "name": "Gulnaz Shaidolda",
           "full_entry": "\"Gulnaz Shaidolda\" <gulnaz.shaidolda@ku.ac.ae>;",
@@ -1644,6 +1636,14 @@
           "first_name": "Dimitrii",
           "middle_names": "",
           "last_name": "Ammosov"
+        },
+        {
+          "email": "rahaggi99@gmail.com",
+          "name": "Rashad Assad Hijji",
+          "full_entry": "\"Rashad Assad Hijji\" <rahaggi99@gmail.com>;",
+          "first_name": "Rashad",
+          "middle_names": "Assad",
+          "last_name": "Hijji"
         }
       ]
     }

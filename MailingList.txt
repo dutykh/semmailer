@@ -206,9 +206,9 @@ Saeed Alameri <100065780@ku.ac.ae>;
 Pedro Latini <100067717@ku.ac.ae>;
 Ziyi Ou <100067704@ku.ac.ae>;
 Mia Khumaeroh <100067705@ku.ac.ae>;
- <rahaggi99@gmail.com>;
 Gulnaz Shaidolda <gulnaz.shaidolda@ku.ac.ae>;
 Esam Alsawi <esam.alsawi@ku.ac.ae>;
 Laurent Najman <laurentalain.najman@ku.ac.ae>;
 Hang Zou <hanglivre@gmail.com>;
-Dimitrii Ammosov <dmitrii.ammosov@ku.ac.ae>
+Dimitrii Ammosov <dmitrii.ammosov@ku.ac.ae>;
+Rashad Hijji <rahaggi99@gmail.com>
