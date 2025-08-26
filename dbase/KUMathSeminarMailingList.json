@@ -1,7 +1,7 @@
 {
   "name": "KUMathSeminarMailingList",
   "created": "2025-04-04",
-  "last_modified": "2025-05-04",
+  "last_modified": "2025-08-26",
   "batches": [
     {
       "id": 1,
@@ -1548,6 +1548,102 @@
           "first_name": "Sergey",
           "middle_names": "",
           "last_name": "Petrov"
+        },
+        {
+          "email": "KU100059310@alumni.ku.ac.ae",
+          "name": "Shahed Ahmad Khamis Asfour",
+          "full_entry": "\"Shahed Ahmad Khamis Asfour\" <KU100059310@alumni.ku.ac.ae>;",
+          "first_name": "Shahed",
+          "middle_names": "Ahmad Khamis",
+          "last_name": "Asfour"
+        },
+        {
+          "email": "100059989@ku.ac.ae",
+          "name": "Ibrahim Zaydan",
+          "full_entry": "\"Ibrahim Zaydan\" <100059989@ku.ac.ae>;",
+          "first_name": "Ibrahim",
+          "middle_names": "",
+          "last_name": "Zaydan"
+        },
+        {
+          "email": "100065780@ku.ac.ae",
+          "name": "Saeed Ali Nasser Alameri",
+          "full_entry": "\"Saeed Ali Nasser Alameri\" <100065780@ku.ac.ae>;",
+          "first_name": "Saeed",
+          "middle_names": "Ali Nasser",
+          "last_name": "Alameri"
+        },
+        {
+          "email": "100067717@ku.ac.ae",
+          "name": "Pedro Dragone Latini",
+          "full_entry": "\"Pedro Dragone Latini\" <100067717@ku.ac.ae>;",
+          "first_name": "Pedro",
+          "middle_names": "Dragone",
+          "last_name": "Latini"
+        },
+        {
+          "email": "100067704@ku.ac.ae",
+          "name": "Ziyi Ou",
+          "full_entry": "\"Ziyi Ou\" <100067704@ku.ac.ae>;",
+          "first_name": "Ziyi",
+          "middle_names": "",
+          "last_name": "Ou"
+        },
+        {
+          "email": "100067705@ku.ac.ae",
+          "name": "Mia Siti Khumaeroh",
+          "full_entry": "\"Mia Siti Khumaeroh\" <100067705@ku.ac.ae>;",
+          "first_name": "Mia",
+          "middle_names": "Siti",
+          "last_name": "Khumaeroh"
+        },
+        {
+          "email": "rahaggi99@gmail.com",
+          "name": "",
+          "full_entry": "<rahaggi99@gmail.com>;",
+          "first_name": "",
+          "middle_names": "",
+          "last_name": ""
+        },
+        {
+          "email": "gulnaz.shaidolda@ku.ac.ae",
+          "name": "Gulnaz Shaidolda",
+          "full_entry": "\"Gulnaz Shaidolda\" <gulnaz.shaidolda@ku.ac.ae>;",
+          "first_name": "Gulnaz",
+          "middle_names": "",
+          "last_name": "Shaidolda"
+        },
+        {
+          "email": "esam.alsawi@ku.ac.ae",
+          "name": "Esam Alsawi",
+          "full_entry": "\"Esam Alsawi\" <esam.alsawi@ku.ac.ae>;",
+          "first_name": "Esam",
+          "middle_names": "",
+          "last_name": "Alsawi"
+        },
+        {
+          "email": "laurentalain.najman@ku.ac.ae",
+          "name": "Laurent Najman",
+          "full_entry": "\"Laurent Najman\" <laurentalain.najman@ku.ac.ae>;",
+          "first_name": "Laurent",
+          "middle_names": "",
+          "last_name": "Najman"
+        },
+        {
+          "email": "hanglivre@gmail.com",
+          "name": "Hang Zou",
+          "full_entry": "\"Hang Zou\" <hanglivre@gmail.com>;",
+          "first_name": "Hang",
+          "middle_names": "",
+          "last_name": "Zou"
+        },
+        {
+          "email": "dmitrii.ammosov@ku.ac.ae",
+          "name": "Dimitrii Ammosov",
+          "full_entry": "\"Dimitrii Ammosov\" <dmitrii.ammosov@ku.ac.ae>;",
+          "first_name": "Dimitrii",
+          "middle_names": "",
+          "last_name": "Ammosov"
         }
       ]
     }
