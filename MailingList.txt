@@ -211,4 +211,8 @@ Esam Alsawi <esam.alsawi@ku.ac.ae>;
 Laurent Najman <laurentalain.najman@ku.ac.ae>;
 Hang Zou <hanglivre@gmail.com>;
 Dimitrii Ammosov <dmitrii.ammosov@ku.ac.ae>;
-Rashad Hijji <rahaggi99@gmail.com>
+Rashad Hijji <rahaggi99@gmail.com>;
+Rashad Hijji <100045841@ku.ac.ae>;
+Adel Al-Yoorby <100063397@ku.ac.ae>;
+Dalaver Anjum <dalaver.anjum@ku.ac.ae>;
+Jack Hughes <jack.hughes@ku.ac.ae>

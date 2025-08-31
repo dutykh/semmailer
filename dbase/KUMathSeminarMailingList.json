@@ -1,7 +1,7 @@
 {
   "name": "KUMathSeminarMailingList",
   "created": "2025-04-04",
-  "last_modified": "2025-08-26",
+  "last_modified": "2025-08-31",
   "batches": [
     {
       "id": 1,
@@ -1644,6 +1644,38 @@
           "first_name": "Rashad",
           "middle_names": "Assad",
           "last_name": "Hijji"
+        },
+        {
+          "email": "100045841@ku.ac.ae",
+          "name": "Rashad Hijji",
+          "full_entry": "\"Rashad Hijji\" <100045841@ku.ac.ae>;",
+          "first_name": "Rashad",
+          "middle_names": "",
+          "last_name": "Hijji"
+        },
+        {
+          "email": "100063397@ku.ac.ae",
+          "name": "Adel Hamed Al-Yoorby",
+          "full_entry": "\"Adel Hamed Al-Yoorby\" <100063397@ku.ac.ae>;",
+          "first_name": "Adel",
+          "middle_names": "Hamed",
+          "last_name": "Al-Yoorby"
+        },
+        {
+          "email": "dalaver.anjum@ku.ac.ae",
+          "name": "Dalaver Hussain Anjum",
+          "full_entry": "\"Dalaver Hussain Anjum\" <dalaver.anjum@ku.ac.ae>;",
+          "first_name": "Dalaver",
+          "middle_names": "Hussain",
+          "last_name": "Anjum"
+        },
+        {
+          "email": "jack.hughes@ku.ac.ae",
+          "name": "Jack Hughes",
+          "full_entry": "\"Jack Hughes\" <jack.hughes@ku.ac.ae>;",
+          "first_name": "Jack",
+          "middle_names": "",
+          "last_name": "Hughes"
         }
       ]
     }
