@@ -28,11 +28,9 @@ Zubelli Jorge <zubellijorge@gmail.com>;
 Jorge Zubelli <jorge.zubelli@ku.ac.ae>;
 Jorge Zubelli <zubelliad@gmail.com>;
 Yerkin Kitapbayev <yerkin.kitapbayev@ku.ac.ae>;
-Ryan Fernandes <ryan.fernandes@ku.ac.ae>;
 Partha Guha <partha.guha@ku.ac.ae>;
 Sofwah Idrus <100059797@ku.ac.ae>;
 Omar Forrest <100059868@ku.ac.ae>;
-Vinicius Ferreira <100059838@ku.ac.ae>;
 Yusuf Amidu <100060537@ku.ac.ae>;
 Muhammad Shahab <100060503@ku.ac.ae>;
 Abrari Hasmi <100060615@ku.ac.ae>;
@@ -56,12 +54,12 @@ Florian Gallois <fgallois@haulotte.com>;
 Mikael Cugnet <mikael.cugnet@cea.fr>;
 Michael Aupetit <maupetit@hbku.edu.qa>;
 Matthieu Brachet <matthieu.brachet@math.univ-poitiers.fr>;
-Lama Tarsissi <lama.tarsissi@sorbonne.ae>
+Lama Tarsissi <lama.tarsissi@sorbonne.ae>;
+Shahana Kappil <100063708@ku.ac.ae>;
+Muhammad Yunus <100063760@ku.ac.ae>
 
 === Batch 2 ===
 
-Shahana Kappil <100063708@ku.ac.ae>;
-Muhammad Yunus <100063760@ku.ac.ae>;
 Ade Bayu <100063758@ku.ac.ae>;
 Sanabel Bisharat <100063742@ku.ac.ae>;
 Defri Ahmad <100064480@ku.ac.ae>;
@@ -78,7 +76,6 @@ Anatolyy Prykarpatskyy <pryk.anat@cybergal.com>;
 Mauro Pereira <mauro.pereira@ku.ac.ae>;
 Nesma Khalil <nesma.khalil@ku.ac.ae>;
 Meryem Rhadbane <meryem.rhadbane@ku.ac.ae>;
-Hana Herbawi <100059412@ku.ac.ae>;
 Ashkan Rafiee <rafiee.ashkan@gmail.com>;
 Srijani Mukherjee <mukherjee.srijani1996@gmail.com>;
 Carlos Cardenas <ccbravo.93@gmail.com>;
@@ -116,13 +113,13 @@ Rim Cheikh <rimelcheikh1995@gmail.com>;
 Dimitrios Mitsotakis <dmitsot@gmail.com>;
 Susovan Pal <Susovan.Pal@mbzuai.ac.ae>;
 Sudarshan Shinde <sudarshan.shinde@sorbonne.ae>;
-Grace Younes <grace.younes@sorbonne.ae>
+Grace Younes <grace.younes@sorbonne.ae>;
+Tanujit Chakraborty <tanujit.chakraborty@sorbonne.ae>;
+Eliane Bsaibess <eliane.bsaibess@sorbonne.ae>;
+Stavros Christopoulos <s.christopoulos@sorbonne.ae>
 
 === Batch 3 ===
 
-Tanujit Chakraborty <tanujit.chakraborty@sorbonne.ae>;
-Eliane Bsaibess <eliane.bsaibess@sorbonne.ae>;
-Stavros Christopoulos <s.christopoulos@sorbonne.ae>;
 Gianluca Mola <Gianluca.Mola@sorbonne.ae>;
 Ahmed Slimani <Ahmed.Slimani@sorbonne.ae>;
 Joumana ElRifai <Joumana.ElRifai@sorbonne.ae>;
@@ -170,20 +167,19 @@ Sana Kurungadan <100066948@ku.ac.ae>;
 Bagas Suherlan <100066890@ku.ac.ae>;
 Muchamad Pratama <100066891@ku.ac.ae>;
 Ayat Alfahel <100059524@ku.ac.ae>;
-Shahed Asfour <100059310@ku.ac.ae>;
 Mohammed Alneyadi <100066879@ku.ac.ae>;
 Andreas Henschel <andreas.henschel@ku.ac.ae>;
 Nashmia Alzaabi <nashmia.alzaabi@ku.ac.ae>;
 Asma Mughrabi <asma.mughrabi@ku.ac.ae>;
 Daria Vyachkileva <daria.vyachkileva@ku.ac.ae>;
-FAWAZ HJOUJ <fawaz.hjouj@ku.ac.ae>
-
-=== Batch 4 ===
-
+FAWAZ HJOUJ <fawaz.hjouj@ku.ac.ae>;
 Idika Okorie <idika.okorie@ku.ac.ae>;
 Imad Elayna <imad.elayna@ku.ac.ae>;
 Jad Bassous <jad.bassous@ku.ac.ae>;
-Hani El-Assadi <hani.elassadi@ku.ac.ae>;
+Hani El-Assadi <hani.elassadi@ku.ac.ae>
+
+=== Batch 4 ===
+
 Khalid Dib <khaled.dib@ku.ac.ae>;
 Mahmoud Yassin <mahmoud.yassin@ku.ac.ae>;
 Nadia Nwayhed <nadia.nwayhed@ku.ac.ae>;

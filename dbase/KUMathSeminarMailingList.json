@@ -1,7 +1,7 @@
 {
   "name": "KUMathSeminarMailingList",
   "created": "2025-04-04",
-  "last_modified": "2025-08-31",
+  "last_modified": "2025-09-01",
   "batches": [
     {
       "id": 1,
@@ -231,14 +231,6 @@
           "last_name": "Kitapbayev"
         },
         {
-          "email": "ryan.fernandes@ku.ac.ae",
-          "name": "Ryan Fernandes",
-          "full_entry": "\"Ryan Fernandes\" <ryan.fernandes@ku.ac.ae>;",
-          "first_name": "Ryan",
-          "middle_names": "",
-          "last_name": "Fernandes"
-        },
-        {
           "email": "partha.guha@ku.ac.ae",
           "name": "Partha Guha",
           "full_entry": "\"Partha Guha\" <partha.guha@ku.ac.ae>;",
@@ -261,14 +253,6 @@
           "first_name": "Omar",
           "middle_names": "",
           "last_name": "Forrest"
-        },
-        {
-          "email": "100059838@ku.ac.ae",
-          "name": "Vinicius Ferreira",
-          "full_entry": "\"Vinicius Ferreira\" <100059838@ku.ac.ae>;",
-          "first_name": "Vinicius",
-          "middle_names": "",
-          "last_name": "Ferreira"
         },
         {
           "email": "100060537@ku.ac.ae",
@@ -461,12 +445,7 @@
           "first_name": "Lama",
           "middle_names": "",
           "last_name": "Tarsissi"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "emails": [
+        },
         {
           "email": "100063708@ku.ac.ae",
           "name": "Shahana Kappil",
@@ -482,7 +461,12 @@
           "first_name": "Muhammad",
           "middle_names": "Ismail",
           "last_name": "Yunus"
-        },
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "emails": [
         {
           "email": "100063758@ku.ac.ae",
           "name": "Ade Candra Bayu",
@@ -610,14 +594,6 @@
           "first_name": "Meryem",
           "middle_names": "",
           "last_name": "Rhadbane"
-        },
-        {
-          "email": "100059412@ku.ac.ae",
-          "name": "Hana Abdul Raouf Herbawi",
-          "full_entry": "\"Hana Abdul Raouf Herbawi\" <100059412@ku.ac.ae>;",
-          "first_name": "Hana",
-          "middle_names": "Abdul Raouf",
-          "last_name": "Herbawi"
         },
         {
           "email": "rafiee.ashkan@gmail.com",
@@ -922,12 +898,7 @@
           "first_name": "Grace",
           "middle_names": "",
           "last_name": "Younes"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "emails": [
+        },
         {
           "email": "tanujit.chakraborty@sorbonne.ae",
           "name": "Tanujit Chakraborty",
@@ -951,7 +922,12 @@
           "first_name": "Stavros",
           "middle_names": "",
           "last_name": "Christopoulos"
-        },
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "emails": [
         {
           "email": "Gianluca.Mola@sorbonne.ae",
           "name": "Gianluca Mola",
@@ -1329,14 +1305,6 @@
           "last_name": "Alfahel"
         },
         {
-          "email": "100059310@ku.ac.ae",
-          "name": "Shahed Ahmad Khamis Asfour",
-          "full_entry": "\"Shahed Ahmad Khamis Asfour\" <100059310@ku.ac.ae>;",
-          "first_name": "Shahed",
-          "middle_names": "Ahmad Khamis",
-          "last_name": "Asfour"
-        },
-        {
           "email": "100066879@ku.ac.ae",
           "name": "Mohammed Khaled Alneyadi",
           "full_entry": "\"Mohammed Khaled Alneyadi\" <100066879@ku.ac.ae>;",
@@ -1383,12 +1351,7 @@
           "first_name": "FAWAZ",
           "middle_names": "",
           "last_name": "HJOUJ"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "emails": [
+        },
         {
           "email": "idika.okorie@ku.ac.ae",
           "name": "\"Idika Eke Okorie\"",
@@ -1420,7 +1383,12 @@
           "first_name": "Hani",
           "middle_names": "",
           "last_name": "El-Assadi"
-        },
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "emails": [
         {
           "email": "khaled.dib@ku.ac.ae",
           "name": "\"Khalid Dib\"",
