@@ -3,7 +3,6 @@
 Alrazi Abdeljabbar <alrazi.abdeljabbar@ku.ac.ae>;
 Abdullahi Umar <abdullahi.umar@ku.ac.ae>;
 Ahmed Ameur <ahmed.ameur@ku.ac.ae>;
-Alexander Lipton <alexander.lipton@ku.ac.ae>;
 Adriana Gabor <adriana.gabor@ku.ac.ae>;
 Aymen Laadhari <aymen.laadhari@ku.ac.ae>;
 Berihu Gebrehiwot <berihu.gebrehiwot@ku.ac.ae>;
@@ -56,11 +55,11 @@ Michael Aupetit <maupetit@hbku.edu.qa>;
 Matthieu Brachet <matthieu.brachet@math.univ-poitiers.fr>;
 Lama Tarsissi <lama.tarsissi@sorbonne.ae>;
 Shahana Kappil <100063708@ku.ac.ae>;
-Muhammad Yunus <100063760@ku.ac.ae>
+Muhammad Yunus <100063760@ku.ac.ae>;
+Ade Bayu <100063758@ku.ac.ae>
 
 === Batch 2 ===
 
-Ade Bayu <100063758@ku.ac.ae>;
 Sanabel Bisharat <100063742@ku.ac.ae>;
 Defri Ahmad <100064480@ku.ac.ae>;
 Mark Sukaiti <100064482@ku.ac.ae>;
@@ -116,11 +115,11 @@ Sudarshan Shinde <sudarshan.shinde@sorbonne.ae>;
 Grace Younes <grace.younes@sorbonne.ae>;
 Tanujit Chakraborty <tanujit.chakraborty@sorbonne.ae>;
 Eliane Bsaibess <eliane.bsaibess@sorbonne.ae>;
-Stavros Christopoulos <s.christopoulos@sorbonne.ae>
+Stavros Christopoulos <s.christopoulos@sorbonne.ae>;
+Gianluca Mola <Gianluca.Mola@sorbonne.ae>
 
 === Batch 3 ===
 
-Gianluca Mola <Gianluca.Mola@sorbonne.ae>;
 Ahmed Slimani <Ahmed.Slimani@sorbonne.ae>;
 Joumana ElRifai <Joumana.ElRifai@sorbonne.ae>;
 Omar ElDakkak <Omar.ElDakkak@sorbonne.ae>;
@@ -176,11 +175,11 @@ FAWAZ HJOUJ <fawaz.hjouj@ku.ac.ae>;
 Idika Okorie <idika.okorie@ku.ac.ae>;
 Imad Elayna <imad.elayna@ku.ac.ae>;
 Jad Bassous <jad.bassous@ku.ac.ae>;
-Hani El-Assadi <hani.elassadi@ku.ac.ae>
+Hani El-Assadi <hani.elassadi@ku.ac.ae>;
+Khalid Dib <khaled.dib@ku.ac.ae>
 
 === Batch 4 ===
 
-Khalid Dib <khaled.dib@ku.ac.ae>;
 Mahmoud Yassin <mahmoud.yassin@ku.ac.ae>;
 Nadia Nwayhed <nadia.nwayhed@ku.ac.ae>;
 Tamara Almeghari <100053921@ku.ac.ae>;
@@ -211,4 +210,5 @@ Rashad Hijji <rahaggi99@gmail.com>;
 Rashad Hijji <100045841@ku.ac.ae>;
 Adel Al-Yoorby <100063397@ku.ac.ae>;
 Dalaver Anjum <dalaver.anjum@ku.ac.ae>;
-Jack Hughes <jack.hughes@ku.ac.ae>
+Jack Hughes <jack.hughes@ku.ac.ae>;
+Jack Hughes <bent505@gmail.com>

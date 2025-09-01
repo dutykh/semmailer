@@ -31,14 +31,6 @@
           "last_name": "Ameur"
         },
         {
-          "email": "alexander.lipton@ku.ac.ae",
-          "name": "Alexander Lipton",
-          "full_entry": "\"Alexander Lipton\" <alexander.lipton@ku.ac.ae>;",
-          "first_name": "Alexander",
-          "middle_names": "",
-          "last_name": "Lipton"
-        },
-        {
           "email": "adriana.gabor@ku.ac.ae",
           "name": "Adriana Gabor",
           "full_entry": "\"Adriana Gabor\" <adriana.gabor@ku.ac.ae>;",
@@ -461,12 +453,7 @@
           "first_name": "Muhammad",
           "middle_names": "Ismail",
           "last_name": "Yunus"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "emails": [
+        },
         {
           "email": "100063758@ku.ac.ae",
           "name": "Ade Candra Bayu",
@@ -474,7 +461,12 @@
           "first_name": "Ade",
           "middle_names": "Candra",
           "last_name": "Bayu"
-        },
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "emails": [
         {
           "email": "100063742@ku.ac.ae",
           "name": "Sanabel Bisharat",
@@ -922,12 +914,7 @@
           "first_name": "Stavros",
           "middle_names": "",
           "last_name": "Christopoulos"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "emails": [
+        },
         {
           "email": "Gianluca.Mola@sorbonne.ae",
           "name": "Gianluca Mola",
@@ -935,7 +922,12 @@
           "first_name": "Gianluca",
           "middle_names": "",
           "last_name": "Mola"
-        },
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "emails": [
         {
           "email": "Ahmed.Slimani@sorbonne.ae",
           "name": "Ahmed Slimani",
@@ -1383,12 +1375,7 @@
           "first_name": "Hani",
           "middle_names": "",
           "last_name": "El-Assadi"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "emails": [
+        },
         {
           "email": "khaled.dib@ku.ac.ae",
           "name": "\"Khalid Dib\"",
@@ -1396,7 +1383,12 @@
           "first_name": "Khalid",
           "middle_names": "",
           "last_name": "Dib"
-        },
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "emails": [
         {
           "email": "mahmoud.yassin@ku.ac.ae",
           "name": "\"Mahmoud Yassin\"",
@@ -1641,6 +1633,14 @@
           "email": "jack.hughes@ku.ac.ae",
           "name": "Jack Hughes",
           "full_entry": "\"Jack Hughes\" <jack.hughes@ku.ac.ae>;",
+          "first_name": "Jack",
+          "middle_names": "",
+          "last_name": "Hughes"
+        },
+        {
+          "email": "bent505@gmail.com",
+          "name": "Jack Hughes",
+          "full_entry": "\"Jack Hughes\" <bent505@gmail.com>;",
           "first_name": "Jack",
           "middle_names": "",
           "last_name": "Hughes"
