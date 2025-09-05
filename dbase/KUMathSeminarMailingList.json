@@ -1,7 +1,7 @@
 {
   "name": "KUMathSeminarMailingList",
   "created": "2025-04-04",
-  "last_modified": "2025-09-01",
+  "last_modified": "2025-09-05",
   "batches": [
     {
       "id": 1,
@@ -1644,6 +1644,14 @@
           "first_name": "Jack",
           "middle_names": "",
           "last_name": "Hughes"
+        },
+        {
+          "email": "100064517@ku.ac.ae",
+          "name": "Noor Al Huda Hani Yousuf",
+          "full_entry": "\"Noor Al Huda Hani Yousuf\" <100064517@ku.ac.ae>;",
+          "first_name": "Noor",
+          "middle_names": "Al Huda Hani",
+          "last_name": "Yousuf"
         }
       ]
     }
