@@ -212,4 +212,6 @@ Adel Al-Yoorby <100063397@ku.ac.ae>;
 Dalaver Anjum <dalaver.anjum@ku.ac.ae>;
 Jack Hughes <jack.hughes@ku.ac.ae>;
 Jack Hughes <bent505@gmail.com>;
-Noor Yousuf <100064517@ku.ac.ae>
+Noor Yousuf <100064517@ku.ac.ae>;
+Giulio Occhionero <Giulio.Occhionero@irh.ae>;
+Michele Bogliardi <Michele.Bogliardi@irh.ae>

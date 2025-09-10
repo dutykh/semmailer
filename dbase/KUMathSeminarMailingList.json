@@ -1,7 +1,7 @@
 {
   "name": "KUMathSeminarMailingList",
   "created": "2025-04-04",
-  "last_modified": "2025-09-05",
+  "last_modified": "2025-09-10",
   "batches": [
     {
       "id": 1,
@@ -1652,6 +1652,22 @@
           "first_name": "Noor",
           "middle_names": "Al Huda Hani",
           "last_name": "Yousuf"
+        },
+        {
+          "email": "Giulio.Occhionero@irh.ae",
+          "name": "Giulio M. Occhionero",
+          "full_entry": "\"Giulio M. Occhionero\" <Giulio.Occhionero@irh.ae>;",
+          "first_name": "Giulio",
+          "middle_names": "M.",
+          "last_name": "Occhionero"
+        },
+        {
+          "email": "Michele.Bogliardi@irh.ae",
+          "name": "Michele Bogliardi",
+          "full_entry": "\"Michele Bogliardi\" <Michele.Bogliardi@irh.ae>;",
+          "first_name": "Michele",
+          "middle_names": "",
+          "last_name": "Bogliardi"
         }
       ]
     }
