@@ -25,6 +25,7 @@ Semmailer is a specialized command-line utility developed to efficiently manage 
 - `semlist.py` - Main Python script for managing mailing lists
 - `MailingList.json` - Default database file containing email addresses
 - `dbase/` - Directory for storing additional mailing list databases
+- `scripts/import_students.py` - Helper for importing student rosters from Excel
 
 ## Installation
 
@@ -153,10 +154,39 @@ python3 semlist.py print 1 output.txt
 
 This will save the emails to the file without displaying them on the terminal, showing only a confirmation message. This feature is useful for scripts and automated workflows.
 
+## Importing student rosters from Excel
+
+A helper script is provided to ingest department spreadsheets that contain student IDs and names and append their email addresses to the active database:
+
+```bash
+python3 scripts/import_students.py data/CIE-Department-PGStudentList.xls \
+    --id-column D --name-column E --dry-run
+```
+
+Key options:
+
+- `--id-column` and `--name-column` accept header names, Excel letters (e.g. `D`), or zero-based indices.
+- `--dry-run` previews how many entries would be imported without touching the database.
+- `--email-domain` (default `ku.ac.ae`) customizes the generated email address suffix.
+- `--database` overrides the active database path if needed.
+
+Imports require `pandas` plus the `xlrd` engine for legacy `.xls` files. Install the latter with:
+
+```bash
+pip install xlrd
+```
+
+After successful import you can refresh the Outlook-ready text file with:
+
+```bash
+python3 semlist.py print all MailingList.txt
+```
+
 ## Requirements
 
 - Python 3.x
-- No external dependencies required
+- Core `semlist.py` commands rely only on the Python standard library.
+- Excel import workflow additionally needs `pandas` (already bundled in most KU environments) and, for `.xls` files, the `xlrd` package.
 
 ## License
 
