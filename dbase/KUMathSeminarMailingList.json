@@ -1,7 +1,7 @@
 {
   "name": "KUMathSeminarMailingList",
   "created": "2025-04-04",
-  "last_modified": "2025-10-21",
+  "last_modified": "2025-10-23",
   "batches": [
     {
       "id": 1,
@@ -3171,6 +3171,14 @@
           "first_name": "Ghadeer",
           "middle_names": "Mahmoud",
           "last_name": "Sawalha"
+        },
+        {
+          "email": "100059310@ku.ac.ae",
+          "name": "Shahed Ahmad Khamis Asfour",
+          "full_entry": "\"Shahed Ahmad Khamis Asfour\" <100059310@ku.ac.ae>;",
+          "first_name": "Shahed",
+          "middle_names": "Ahmad Khamis",
+          "last_name": "Asfour"
         }
       ]
     }

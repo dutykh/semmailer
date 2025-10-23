@@ -409,4 +409,5 @@ Dina Hejji <100066945@ku.ac.ae>;
 Rawdha Alhammadi <100045756@ku.ac.ae>;
 Nada Kawde <100066960@ku.ac.ae>;
 Raneem Abdel-Rahim <100067007@ku.ac.ae>;
-Ghadeer Sawalha <100053760@ku.ac.ae>
+Ghadeer Sawalha <100053760@ku.ac.ae>;
+Shahed Asfour <100059310@ku.ac.ae>
